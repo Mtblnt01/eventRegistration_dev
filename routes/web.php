@@ -4,7 +4,16 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EventController;
 
-/*
+
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('events', [EventController::class, 'index'])->name('events.index');
+    Route::get('events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('events', [EventController::class, 'store'])->name('events.store');
+    Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+    Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,14 +29,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-*/
-
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('events', [EventController::class, 'index'])->name('events.index');
-    Route::get('events/create', [EventController::class, 'create'])->name('events.create');
-    Route::post('events', [EventController::class, 'store'])->name('events.store');
-    Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
-    Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
-    Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
-});
 
